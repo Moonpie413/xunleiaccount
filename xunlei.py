@@ -10,6 +10,7 @@ import cStringIO
 
 
 def getXunLeiAccount():
+    account_info = []
     html = getPageHTML('http://521xunlei.com/portal.php')
     soup = BeautifulSoup(html, 'html.parser')
     tag_a = soup.find(id="portal_block_62_content").find_all('a')
@@ -28,8 +29,8 @@ def getXunLeiAccount():
                 if (text.find(flag) >= 0):
                     for line in text.split("\n"):
                         if (line.find(flag) >= 0 and len(line) < 90):
-                            print(line)
-            break
+                            account_info.append(line)
+            return account_info
 
 
 def checkLink(title):
@@ -54,6 +55,3 @@ def getPageHTML(url):
         html = gzip.GzipFile(fileobj=cStringIO.StringIO(html)).read()
     html = html.decode('gbk')
     return html
-
-if __name__ == '__main__':
-    getXunLeiAccount()
